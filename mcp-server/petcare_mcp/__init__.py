@@ -1,1 +1,0 @@
-"""Petcare MCP server package."""
