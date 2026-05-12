@@ -1,6 +1,6 @@
 .PHONY: help install up down test test-int test-all lint format clean logs
 
-# ── Справка ─────────────────────────────────────────────────────
+#Справка
 help:
 	@echo "🔧 PetCare MCP-Server — команды управления"
 	@echo ""
@@ -10,11 +10,11 @@ help:
 	@echo "Код: make lint / make format"
 	@echo "Очистка: make clean"
 
-# ── Установка ──────────────────────────────────────────────────
+#Установка
 install:
 	pip install -e ".[dev]" 2>/dev/null || pip install -e .
 
-# ── Инфраструктура ────────────────────────────────────────────
+#Инфраструктура
 up:
 	docker compose -f docker/docker-compose.yml up -d --build
 
@@ -25,7 +25,7 @@ logs:
 	docker compose -f docker/docker-compose.yml logs -f api
 
 
-# Запустить MCP-сервер для разработки
+#Запустить MCP-сервер для разработки
 run:
 	uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
@@ -33,13 +33,12 @@ run:
 run-prod:
 	uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
 
-# ── Тесты ──────────────────────────────────────────────────────
+#Тесты
 test:
 	pytest tests/unit/ -v --tb=short
 
 test-int:
 	@docker compose -f docker/docker-compose.yml ps postgres | grep -q Up || \
-		(echo "❌ Сначала запустите: make up" && exit 1)
 	pytest tests/integration/ -v --tb=short
 
 test-all:
@@ -47,4 +46,4 @@ test-all:
 		--cov=app --cov-report=term-missing \
 		--json-report --json-report-file=report.json
 
-# ── Качество кода ──────────────────────────────────────────────
+#Качество кода
